@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать инцидент</title>
+    <link rel="stylesheet" type="text/css" href="/static/style/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Заявить</h1>
+    <form id="create-form" class="registration-form">
+        <label>ФИО:</label>
+        <input id="client_fio" name="client_fio" required>
+        <label>Услуга:</label>
+        <select name="service_line_name" size="3" multiple form="create-form">
+            <option value="Сборка">Сборка</option>
+            <option value="Ремонт">Ремонт</option>
+            <option value="Администрирование">Администрирование</option>
+	    </select>
+        <label>Тема:</label>
+        <input id="incident_name" name="incident_name" required>
+        <label>Описание:</label>
+        <input id="incident_description" name="incident_description" required>
+        <button type="submit" id="login-button" class="submit-button" onclick="CreateFunction(event)">Создать</button>
+    </form>
+</div>
+
+<!-- Подключаем внешний JavaScript-файл -->
+<script src="/static/js/script.js"></script>
+</body>
+</html>
