@@ -163,27 +163,26 @@ class MainForm(ctk.CTk):
             )
             refresh_button.grid(row=0, column=1, padx=8, pady=5)
 
-            if post_is_admin(self.token)["data"]:
-                create_button = ctk.CTkButton(
-                    footer_row,
-                    text="Создать",
-                    command=self.create_service_buss
-                )
-                create_button.grid(row=0, column=2, padx=8, pady=5)
+            create_button = ctk.CTkButton(
+                footer_row,
+                text="Создать",
+                command=self.create_service_buss
+            )
+            create_button.grid(row=0, column=2, padx=8, pady=5)
 
-                edit_button = ctk.CTkButton(
-                    footer_row,
-                    text="Изменить",
-                    command=self.edit_service_buss
-                )
-                edit_button.grid(row=0, column=3, padx=8, pady=5)
+            edit_button = ctk.CTkButton(
+                footer_row,
+                text="Изменить",
+                command=self.edit_service_buss
+            )
+            edit_button.grid(row=0, column=3, padx=8, pady=5)
 
-                delete_button = ctk.CTkButton(
-                    footer_row,
-                    text="Удалить",
-                    command=self.delete_service_buss
-                )
-                delete_button.grid(row=0, column=4, padx=8, pady=5)
+            delete_button = ctk.CTkButton(
+                footer_row,
+                text="Удалить",
+                command=self.delete_service_buss
+            )
+            delete_button.grid(row=0, column=4, padx=8, pady=5)
 
             # Tab tech services
             x1_scroll = ttk.Scrollbar(tab_services_tech)
@@ -230,27 +229,26 @@ class MainForm(ctk.CTk):
             )
             refresh_button1.grid(row=0, column=1, padx=8, pady=5)
 
-            if post_is_admin(self.token)["data"]:
-                create_button1 = ctk.CTkButton(
-                    footer_row1,
-                    text="Создать",
-                    command=self.create_service_tech
-                )
-                create_button1.grid(row=0, column=2, padx=8, pady=5)
+            create_button1 = ctk.CTkButton(
+                footer_row1,
+                text="Создать",
+                command=self.create_service_tech
+            )
+            create_button1.grid(row=0, column=2, padx=8, pady=5)
 
-                edit_button1 = ctk.CTkButton(
-                    footer_row1,
-                    text="Изменить",
-                    command=self.edit_service_tech
-                )
-                edit_button1.grid(row=0, column=3, padx=8, pady=5)
+            edit_button1 = ctk.CTkButton(
+                footer_row1,
+                text="Изменить",
+                command=self.edit_service_tech
+            )
+            edit_button1.grid(row=0, column=3, padx=8, pady=5)
 
-                delete_button1 = ctk.CTkButton(
-                    footer_row1,
-                    text="Удалить",
-                    command=self.delete_service_tech
-                )
-                delete_button1.grid(row=0, column=4, padx=8, pady=5)
+            delete_button1 = ctk.CTkButton(
+                footer_row1,
+                text="Удалить",
+                command=self.delete_service_tech
+            )
+            delete_button1.grid(row=0, column=4, padx=8, pady=5)
         else:
             error_label = ctk.CTkLabel(
                 tab_services_buss,
@@ -353,8 +351,7 @@ class MainForm(ctk.CTk):
 
             footer_row2.pack(fill="both")
 
-        footer_row3 = ctk.CTkFrame(tab_messenger
-                                   )
+        footer_row3 = ctk.CTkFrame(tab_messenger)
         x_scroll3 = ttk.Scrollbar(tab_messenger)
         x_scroll3.pack(fill="y", side="right")
 

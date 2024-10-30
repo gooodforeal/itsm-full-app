@@ -125,7 +125,7 @@ class DialogForm(ctk.CTkToplevel):
         self.canvas.configure(bg='grey20')
         self.vsb.pack(side="right", fill="y")
         self.canvas.pack(side="top", fill="both", expand=True)
-        self.canvas.create_window(0, 0, window=self.frame, anchor="n", width=1230)
+        self.canvas.create_window(0, 0, window=self.frame, anchor="n", width=985)
 
         self.draw_messages()
 
