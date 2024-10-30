@@ -21,7 +21,7 @@ class IncidentForm(ctk.CTkToplevel):
         HEIGHT = HEIGHT // 2
         WIDTH = WIDTH - 200
         HEIGHT = HEIGHT - 200
-        self.geometry(f'1200x700+{WIDTH}+{HEIGHT}')
+        self.geometry(f'500x500+{WIDTH}+{HEIGHT}')
 
         self.parent = parent
         self.token = token
@@ -44,6 +44,42 @@ class IncidentForm(ctk.CTkToplevel):
         row_header = ctk.CTkFrame(main_frame)
         row_header.pack(expand=1, fill="both", anchor="n")
 
+        incident_id_label = ctk.CTkLabel(
+            row_header,
+            text="ID: ",
+            justify="left",
+            anchor="w",
+            font=FONT_BOLD
+        )
+        incident_id_label_text = ctk.CTkLabel(
+            row_header,
+            font=FONT,
+            justify="left",
+            anchor="w",
+            width=200,
+            text=self.incident["data"]["id"]
+        )
+        incident_id_label.grid(row=0, column=0, sticky="w", padx=8, pady=8)
+        incident_id_label_text.grid(row=0, column=1, sticky="w", padx=8, pady=8)
+
+        incident_date_label = ctk.CTkLabel(
+            row_header,
+            text="Дата: ",
+            justify="left",
+            anchor="w",
+            font=FONT_BOLD
+        )
+        incident_date_label_text = ctk.CTkLabel(
+            row_header,
+            font=FONT,
+            justify="left",
+            anchor="w",
+            width=200,
+            text=self.incident["data"]["created_at"].split(".")[0].replace("T", " ")[:-3],
+        )
+        incident_date_label.grid(row=1, column=0, sticky="w", padx=8, pady=8)
+        incident_date_label_text.grid(row=1, column=1, sticky="w", padx=8, pady=8)
+
         incident_topic_label = ctk.CTkLabel(
             row_header,
             text="Тема: ",
@@ -59,8 +95,8 @@ class IncidentForm(ctk.CTkToplevel):
             width=200,
             text=self.incident["data"]["name"]
         )
-        incident_topic_label.grid(row=0, column=0, sticky="w", padx=8, pady=8)
-        incident_topic_label_text.grid(row=0, column=1, sticky="w", padx=8, pady=8)
+        incident_topic_label.grid(row=2, column=0, sticky="w", padx=8, pady=8)
+        incident_topic_label_text.grid(row=2, column=1, sticky="w", padx=8, pady=8)
 
         service_line_label = ctk.CTkLabel(
             row_header,
@@ -77,8 +113,8 @@ class IncidentForm(ctk.CTkToplevel):
             width=200,
             text=self.incident["data"]["service_line"]["name"]
         )
-        service_line_label.grid(row=1, column=0, sticky="w", padx=8, pady=8)
-        service_line_label_text.grid(row=1, column=1, sticky="w", padx=8, pady=8)
+        service_line_label.grid(row=3, column=0, sticky="w", padx=8, pady=8)
+        service_line_label_text.grid(row=3, column=1, sticky="w", padx=8, pady=8)
 
         desc_label = ctk.CTkLabel(
             row_header,
@@ -95,8 +131,8 @@ class IncidentForm(ctk.CTkToplevel):
             width=400,
             text=self.incident["data"]["description"]
         )
-        desc_label.grid(row=2, column=0, sticky="w", padx=8, pady=8)
-        desc_label_text.grid(row=2, column=1, sticky="w", padx=8, pady=8)
+        desc_label.grid(row=4, column=0, sticky="w", padx=8, pady=8)
+        desc_label_text.grid(row=4, column=1, sticky="w", padx=8, pady=8)
 
         status_label = ctk.CTkLabel(
             row_header,
@@ -113,8 +149,8 @@ class IncidentForm(ctk.CTkToplevel):
             width=200,
             text=self.incident["data"]["status"]["name"]
         )
-        status_label.grid(row=3, column=0, sticky="w", padx=8, pady=8)
-        status_label_text.grid(row=3, column=1, sticky="w", padx=8, pady=8)
+        status_label.grid(row=5, column=0, sticky="w", padx=8, pady=8)
+        status_label_text.grid(row=5, column=1, sticky="w", padx=8, pady=8)
 
         user_label = ctk.CTkLabel(
             row_header,
@@ -133,8 +169,8 @@ class IncidentForm(ctk.CTkToplevel):
                 width=300,
                 text=self.incident["data"]["user"]["username"] + " " + f'({self.incident["data"]["user"]["fio"]})'
             )
-            user_label.grid(row=4, column=0, sticky="w", padx=8, pady=8)
-            user_label_text.grid(row=4, column=1, sticky="w", padx=8, pady=8)
+            user_label.grid(row=6, column=0, sticky="w", padx=8, pady=8)
+            user_label_text.grid(row=6, column=1, sticky="w", padx=8, pady=8)
 
         if self.incident["data"]["from_client_fio"] is not None:
             client_label = ctk.CTkLabel(
@@ -152,8 +188,8 @@ class IncidentForm(ctk.CTkToplevel):
                 width=300,
                 text=self.incident["data"]["from_client_fio"]
             )
-            client_label.grid(row=5, column=0, sticky="w", padx=8, pady=8)
-            client_label_text.grid(row=5, column=1, sticky="w", padx=8, pady=8)
+            client_label.grid(row=7, column=0, sticky="w", padx=8, pady=8)
+            client_label_text.grid(row=7, column=1, sticky="w", padx=8, pady=8)
 
     def grab_focus(self) -> None:
         self.grab_set()

@@ -2,6 +2,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base, str_uniq, int_pk
 from app.dialogs.models import Dialogs
+from app.incidents.models import Incidents
 
 
 class Users(Base):
@@ -15,7 +16,19 @@ class Users(Base):
     is_admin: Mapped[bool] = mapped_column(default=False, server_default=text('false'), nullable=False)
     is_tech: Mapped[bool] = mapped_column(default=False, server_default=text('false'), nullable=False)
 
-    incidents = relationship("Incidents", back_populates="user")
+    incidents = relationship(
+        "Incidents",
+        foreign_keys=[Incidents.user_id],
+        back_populates="user",
+        cascade="all, delete",
+    )
+    solved_incidents = relationship(
+        "Incidents",
+        foreign_keys=[Incidents.solver_id],
+        back_populates="solver",
+        cascade="all, delete",
+    )
+
     sent_messages = relationship(
         "Dialogs",
         foreign_keys=[Dialogs.sender_id],

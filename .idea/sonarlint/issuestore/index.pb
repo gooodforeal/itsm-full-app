@@ -61,14 +61,6 @@ V
 &client/api_requests/dialogs/dialogs.py,2\0\207c7f9e923bf94935dcaffab64fd1883c5ce08a
 >
 client/main.py,d\b\dbe1e2a26f1a69d8a31777f186fbfbb315b42a10
-C
-app/pages/router.py,5\2\52288c7ce8cc943a0abd3b155fc50c6648cca224
-G
-app/static/js/script.js,5\1\515a29606d6fa5ffe7421a0e1d4092063d2832b9
-H
-app/templates/index.html,a\9\a9286b68ee697ecedf4dc538c397cb62f25f8ea6
-J
-app/static/style/style.css,2\8\28193d80458e288d2eb1f8d11088bc0c4d59a1b1
 L
 client/forms/service_form.py,2\b\2bf78a323c46a627819419b24f8667fefb155198
 J
@@ -81,3 +73,22 @@ M
 client/forms/register_from.py,c\7\c779022b400f4f38a52515a3f4760708c885a12a
 I
 client/forms/main_form.py,b\2\b202f6b0b67765b0f074a2b1725091a538ec08d3
+S
+#client/forms/create_service_form.py,a\c\ac49af97d8e1a18c9e8f8eca906b42ffcf4a0c1e
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+K
+client/forms/dialog_form.py,a\7\a7e6f2cd6ad088ba0ffaf38c3228f4a7bd61d92c
+O
+client_site/static/js/script.js,6\6\6665824400498927262af3cd2a92022c554d4cfa
+P
+ client_site/templates/index.html,8\c\8c418c4a53a1da9f5c14f3faddf629ef73c08874
+R
+"client_site/static/style/style.css,a\9\a9bd84b6021e01cec04eb65e5d3e6c17e2a441c8
+K
+client_site/pages/router.py,e\2\e2fe295216f90a66a040f2d8dfa905baf0d9e9d5
+C
+client_site/main.py,1\4\1407fe839af7618d2ea51518e4145ef0c8d02857
+j
+:app/migrations/versions/1f8938c5966f_added_few_fields_3.py,7\3\7323ea1c151e380c666b43ce5e9daa72c656267a

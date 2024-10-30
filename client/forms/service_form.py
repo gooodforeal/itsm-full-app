@@ -114,7 +114,7 @@ class ServiceForm(ctk.CTkToplevel):
             # Row service desc
             service_desc_label = ctk.CTkLabel(
                 row_header,
-                text="Описание услуги: ",
+                text="Описание услуги (Конф. ед.): ",
                 justify="left",
                 anchor="w",
                 font=FONT_BOLD

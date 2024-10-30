@@ -115,6 +115,9 @@ class DialogForm(ctk.CTkToplevel):
 
                         msgrow.pack(anchor="ne", pady=10, padx=10)
 
+        self.canvas.update_idletasks()
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
         self.after(3000, self.draw_messages)
 
     def draw_widgets(self):
@@ -129,8 +132,7 @@ class DialogForm(ctk.CTkToplevel):
 
         self.draw_messages()
 
-        self.canvas.update_idletasks()
-        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
 
         footer_row = ctk.CTkFrame(self)
 

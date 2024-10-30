@@ -26,17 +26,21 @@ class Incidents(Base):
         ForeignKey("statuses.id", ondelete="CASCADE"),
         default=1
     )
-    status = relationship("Statuses", back_populates="incidents")
-
     user_id: Mapped[int] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"),
         nullable=True
     )
-    user = relationship("Users", back_populates="incidents")
-
+    solver_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        nullable=True
+    )
     service_line_id: Mapped[int] = mapped_column(
         ForeignKey("service_lines.id", ondelete="CASCADE")
     )
+
+    status = relationship("Statuses", back_populates="incidents")
+    user = relationship("Users", back_populates="incidents", foreign_keys=[user_id])
+    solver = relationship("Users", back_populates="solved_incidents", foreign_keys=[solver_id])
     service_line = relationship("ServiceLines", back_populates="incidents")
 
     extend_existing = True
