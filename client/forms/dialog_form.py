@@ -120,12 +120,12 @@ class DialogForm(ctk.CTkToplevel):
     def draw_widgets(self):
         self.canvas = ctk.CTkCanvas(self, borderwidth=0)
         self.frame = ctk.CTkFrame(self.canvas, bg_color="#ffffff")
-        self.vsb = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
+        self.vsb = ttk.Scrollbar(self.canvas, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.vsb.set)
         self.canvas.configure(bg='grey20')
         self.vsb.pack(side="right", fill="y")
         self.canvas.pack(side="top", fill="both", expand=True)
-        self.canvas.create_window((8, 0), window=self.frame, anchor="n", width=985)
+        self.canvas.create_window(0, 0, window=self.frame, anchor="n", width=1230)
 
         self.draw_messages()
 

@@ -3,7 +3,7 @@ import customtkinter as ctk
 
 from tkinter import StringVar
 from tkinter.messagebox import showerror, showinfo
-import client.forms.login_form
+from client.forms import login_form
 
 from client.api_requests.funcs import api_register
 
@@ -126,7 +126,7 @@ class RegisterForm(ctk.CTkToplevel):
 
         if response["status"] == "ok":
             showinfo(title="Ok", message=response["message"])
-            log_form = login_from.LoginForm(self.parent)
+            log_form = login_form.LoginForm(self.parent)
             self.withdraw()
             log_form.deiconify()
         else:
