@@ -392,80 +392,94 @@ class MainForm(ctk.CTk):
         create_service_form.CreateServiceForm(parent=self, token=self.token, type="Бизнес услуги")
 
     def open_service_buss(self):
-        current_item = self.table.focus()
-        service_id = int(self.table.item(current_item)["values"][0])
-
-        service = get_service(service_id=service_id)
-
-        service_form.ServiceForm(parent=self, service=service)
+        try:
+            current_item = self.table.focus()
+            service_id = int(self.table.item(current_item)["values"][0])
+            service = get_service(service_id=service_id)
+            service_form.ServiceForm(parent=self, service=service)
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def edit_service_buss(self):
-        current_item = self.table.focus()
-        service_id = int(self.table.item(current_item)["values"][0])
-
-        edit_service_form.EditServiceForm(parent=self, token=self.token, service_id=service_id)
+        try:
+            current_item = self.table.focus()
+            service_id = int(self.table.item(current_item)["values"][0])
+            edit_service_form.EditServiceForm(parent=self, token=self.token, service_id=service_id)
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def delete_service_buss(self):
-        current_item = self.table.focus()
-        service_id = int(self.table.item(current_item)["values"][0])
-
-        check = post_delete_service(token=self.token, service_id=service_id)
-        if check["status"] == "ok":
-            showinfo(title=check["status"], message=check["message"])
-        else:
-            showerror(title=check["status"], message=check["message"])
+        try:
+            current_item = self.table.focus()
+            service_id = int(self.table.item(current_item)["values"][0])
+            check = post_delete_service(token=self.token, service_id=service_id)
+            if check["status"] == "ok":
+                showinfo(title=check["status"], message=check["message"])
+            else:
+                showerror(title=check["status"], message=check["message"])
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def create_service_tech(self):
         create_service_form.CreateServiceForm(parent=self, token=self.token, type="Технические услуги")
 
     def delete_service_tech(self):
-        current_item = self.table1.focus()
-        service_id = int(self.table1.item(current_item)["values"][0])
-
-        check = post_delete_service(token=self.token, service_id=service_id)
-        if check["status"] == "ok":
-            showinfo(title=check["status"], message=check["message"])
-        else:
-            showerror(title=check["status"], message=check["message"])
+        try:
+            current_item = self.table1.focus()
+            service_id = int(self.table1.item(current_item)["values"][0])
+            check = post_delete_service(token=self.token, service_id=service_id)
+            if check["status"] == "ok":
+                showinfo(title=check["status"], message=check["message"])
+            else:
+                showerror(title=check["status"], message=check["message"])
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def open_service_tech(self):
-        current_item = self.table1.focus()
-        service_id = int(self.table1.item(current_item)["values"][0])
-
-        service = get_service(service_id=service_id)
-
-        service_form.ServiceForm(parent=self, service=service)
+        try:
+            current_item = self.table1.focus()
+            service_id = int(self.table1.item(current_item)["values"][0])
+            service = get_service(service_id=service_id)
+            service_form.ServiceForm(parent=self, service=service)
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def edit_service_tech(self):
-        current_item = self.table1.focus()
-        service_id = int(self.table1.item(current_item)["values"][0])
-
-        edit_service_form.EditServiceForm(parent=self, token=self.token, service_id=service_id)
+        try:
+            current_item = self.table1.focus()
+            service_id = int(self.table1.item(current_item)["values"][0])
+            edit_service_form.EditServiceForm(parent=self, token=self.token, service_id=service_id)
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def create_incident(self):
         create_incident_form.CreateIncidentForm(parent=self, token=self.token)
 
     def open_incident(self):
-        current_item = self.table2.focus()
-        incident_id = int(self.table2.item(current_item)["values"][0])
-
-        incident = get_incident(incident_id=incident_id)
-
-        incident_form.IncidentForm(token=self.token, parent=self, incident=incident)
+        try:
+            current_item = self.table2.focus()
+            incident_id = int(self.table2.item(current_item)["values"][0])
+            incident = get_incident(incident_id=incident_id)
+            incident_form.IncidentForm(token=self.token, parent=self, incident=incident)
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def edit_incident(self):
-        current_item = self.table2.focus()
-        incident_id = int(self.table2.item(current_item)["values"][0])
-
-        incident = get_incident(incident_id=incident_id)
-
-        edit_incident_form.EditIncidentForm(parent=self, token=self.token, incident=incident)
+        try:
+            current_item = self.table2.focus()
+            incident_id = int(self.table2.item(current_item)["values"][0])
+            incident = get_incident(incident_id=incident_id)
+            edit_incident_form.EditIncidentForm(parent=self, token=self.token, incident=incident)
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def open_chat(self):
-        current_item = self.table3.focus()
-        recipient_username = str(self.table3.item(current_item)["values"][1])
-
-        dialog_form.DialogForm(parent=self, token=self.token, recipient_username=recipient_username)
+        try:
+            current_item = self.table3.focus()
+            recipient_username = str(self.table3.item(current_item)["values"][1])
+            dialog_form.DialogForm(parent=self, token=self.token, recipient_username=recipient_username)
+        except IndexError:
+            showerror("Ошибка", "Выберите из таблицы!")
 
     def run_app(self) -> None:
         self.mainloop()

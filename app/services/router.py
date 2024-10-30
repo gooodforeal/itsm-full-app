@@ -87,3 +87,14 @@ async def get_all_services():
         "message": "Successful request!",
         "data": services
     }
+
+
+@router.get("/by/service_line/{service_line}")
+async def get_services_by_service_line(service_line: str):
+    services = await ServicesDAO.find_all_services_by_service_line(service_line)
+    return {
+        "status": "ok",
+        "message": "Successful request!",
+        "data": services
+    }
+

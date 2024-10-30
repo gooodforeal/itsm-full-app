@@ -1,12 +1,7 @@
 import customtkinter
 import customtkinter as ctk
 
-from tkinter import ttk
-from tkinter.messagebox import showerror, showinfo
-
-from tkinter import StringVar
-
-from client.api_requests.funcs import get_service_lines, post_create_service, post_create_incident
+from client.api_requests.funcs import get_services_by_service_line
 
 FONT_BOLD = ("Segoe UI", 14, "bold")
 FONT = ("Segoe UI", 14)
@@ -21,7 +16,7 @@ class IncidentForm(ctk.CTkToplevel):
         HEIGHT = HEIGHT // 2
         WIDTH = WIDTH - 200
         HEIGHT = HEIGHT - 200
-        self.geometry(f'500x500+{WIDTH}+{HEIGHT}')
+        self.geometry(f'1000x700+{WIDTH}+{HEIGHT}')
 
         self.parent = parent
         self.token = token
@@ -190,6 +185,47 @@ class IncidentForm(ctk.CTkToplevel):
             )
             client_label.grid(row=7, column=0, sticky="w", padx=8, pady=8)
             client_label_text.grid(row=7, column=1, sticky="w", padx=8, pady=8)
+
+        if self.incident["data"]["solver"] is not None:
+            solver_label = ctk.CTkLabel(
+                row_header,
+                text="Ответственный: ",
+                justify="left",
+                anchor="w",
+                font=FONT_BOLD
+            )
+            solver_label_text = ctk.CTkLabel(
+                row_header,
+                font=FONT,
+                justify="left",
+                anchor="w",
+                text=f'{self.incident["data"]["solver"]["username"]} ({self.incident["data"]["solver"]["fio"]})'
+            )
+            solver_label.grid(row=8, column=0, sticky="w", padx=8, pady=8)
+            solver_label_text.grid(row=8, column=1, sticky="w", padx=8, pady=8)
+
+        services = get_services_by_service_line(self.incident["data"]["service_line"]["name"])
+        conf_text = ""
+        for service in services["data"]["services"]:
+            for line in service["description"].split(";"):
+                conf_text += f"{line}\n"
+
+        conf_label = ctk.CTkLabel(
+            row_header,
+            text="Связвнные ИТ-услуги: ",
+            justify="left",
+            anchor="w",
+            font=FONT_BOLD
+        )
+        conf_label_text = ctk.CTkLabel(
+            row_header,
+            font=FONT,
+            justify="left",
+            anchor="w",
+            text=conf_text
+        )
+        conf_label.grid(row=9, column=0, sticky="w", padx=8, pady=8)
+        conf_label_text.grid(row=9, column=1, sticky="w", padx=8, pady=8)
 
     def grab_focus(self) -> None:
         self.grab_set()
