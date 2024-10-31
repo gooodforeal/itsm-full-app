@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Request, Depends, UploadFile
+from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 
 
 router = APIRouter(prefix='/pages', tags=['Фронтенд'])
-templates = Jinja2Templates(directory='app/templates')
+templates = Jinja2Templates(directory='client_site/templates')
 
 
 @router.get('/client/create')

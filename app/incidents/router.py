@@ -71,10 +71,13 @@ async def create_client_incident(incident: CreateIncidentClientSchema):
 
 @router.post("/edit")
 async def edit_incident(incident: EditIncidentSchema):
+    current_user = await get_current_user(incident.token)
+    current_user_id = current_user.id
     if await is_admin_user(incident.token):
         incident_dict = incident.dict()
         incident_status = await StatusesDAO.find_one_or_none(name=incident.incident_status_name.value)
         incident_dict["incident_status_name"] = incident_status.id
+        incident_dict["incident_solver_id"] = current_user_id
         edited_incident = await IncidentsDAO.edit_incident(incident_dict)
         return {
             "status": "ok",

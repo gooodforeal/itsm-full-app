@@ -55,6 +55,17 @@ def get_services() -> dict:
     return response.json()
 
 
+def get_services_by_service_line(service_line: str) -> dict:
+    url = URL + "/" + "services/by/service_line/" + service_line
+
+    response = requests.get(
+        url=url,
+        headers=headers
+    )
+
+    return response.json()
+
+
 def post_incidents(token: str) -> dict:
     url = URL + "/" + "incidents/" + "all"
 

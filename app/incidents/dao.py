@@ -21,6 +21,7 @@ class IncidentsDAO(BaseDAO):
                 .options(joinedload(Incidents.status).load_only(Statuses.name))
                 .options(joinedload(Incidents.service_line).load_only(ServiceLines.name))
                 .options(joinedload(Incidents.user).load_only(Users.username, Users.fio))
+                .options(joinedload(Incidents.solver).load_only(Users.username, Users.fio))
                 .filter_by(id=incident_id)
             )
             result = await session.execute(query)
@@ -67,10 +68,11 @@ class IncidentsDAO(BaseDAO):
             stmt = (
                 update(Incidents)
                 .where(Incidents.id == data["incident_id"])
-                .values(status_id=data["incident_status_name"])
+                .values(status_id=data["incident_status_name"], solver_id=data["incident_solver_id"])
             )
             res = await session.execute(stmt)
             await session.commit()
+
             return res
 
     @classmethod

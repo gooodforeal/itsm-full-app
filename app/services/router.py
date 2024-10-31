@@ -2,7 +2,7 @@ from fastapi import APIRouter
 
 from app.services.dao import ServicesDAO, ServiceLinesDAO, ServiceTypesDAO
 from app.services.schemas import EditServiceSchema, CreateServiceSchema, DeleteServiceSchema
-from app.users.dependencies import is_admin_user
+from app.users.dependencies import is_admin_user, get_current_user
 
 
 router = APIRouter(prefix='/services', tags=['services'])
@@ -30,13 +30,6 @@ async def get_service(service_id: int):
 
 @router.post("/create")
 async def edit_service(service: CreateServiceSchema):
-    if not(await is_admin_user(service.token)):
-        return {
-            "status": "Error",
-            "message": "Not enough rights!",
-            "data": None
-        }
-
     service_type = await ServiceTypesDAO.find_one_or_none(name=service.service_type_name)
     service_line = await ServiceLinesDAO.find_one_or_none(name=service.service_line_name)
 
@@ -55,13 +48,7 @@ async def edit_service(service: CreateServiceSchema):
 
 @router.post("/delete/")
 async def delete_service_by_id(service: DeleteServiceSchema):
-    if not(await is_admin_user(service.token)):
-        return {
-            "status": "Error",
-            "message": "Not enough rights!",
-            "data": None
-        }
-
+    await get_current_user(service.token)
     check = await ServicesDAO.delete(id=service.service_id)
     if check:
         return {
@@ -79,23 +66,17 @@ async def delete_service_by_id(service: DeleteServiceSchema):
 
 @router.post("/edit")
 async def edit_service(service: EditServiceSchema):
-    if await is_admin_user(service.token):
-        edited_service = await ServicesDAO.edit_service(
-            service_id=service.service_id,
-            service_name=service.service_name,
-            service_description=service.service_description
-        )
-        return {
-            "status": "ok",
-            "message": "Successful edit!",
-            "data": edited_service
-        }
-    else:
-        return {
-            "status": "Error",
-            "message": "Not enough rights!",
-            "data": None
-        }
+    await get_current_user(service.token)
+    edited_service = await ServicesDAO.edit_service(
+        service_id=service.service_id,
+        service_name=service.service_name,
+        service_description=service.service_description
+    )
+    return {
+        "status": "ok",
+        "message": "Successful edit!",
+        "data": edited_service
+    }
 
 
 @router.get("/all")
@@ -106,3 +87,14 @@ async def get_all_services():
         "message": "Successful request!",
         "data": services
     }
+
+
+@router.get("/by/service_line/{service_line}")
+async def get_services_by_service_line(service_line: str):
+    services = await ServicesDAO.find_all_services_by_service_line(service_line)
+    return {
+        "status": "ok",
+        "message": "Successful request!",
+        "data": services
+    }
+

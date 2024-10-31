@@ -1,6 +1,6 @@
 from sqlalchemy import select, update
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, selectinload
 
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
@@ -13,13 +13,13 @@ class ServicesDAO(BaseDAO):
     @classmethod
     async def find_all_joined(cls):
         async with async_session_maker() as session:
+            print(123)
             query = (
                 select(Services)
                 .options(joinedload(Services.service_type))
                 .options(joinedload(Services.service_line))
                 .order_by(Services.service_type_id)
                 .order_by(Services.service_line_id)
-
             )
             result = await session.execute(query)
             return result.scalars().all()
@@ -32,6 +32,17 @@ class ServicesDAO(BaseDAO):
                 .options(joinedload(Services.service_type))
                 .options(joinedload(Services.service_line))
                 .filter_by(id=service_id)
+            )
+            result = await session.execute(query)
+            return result.scalar_one_or_none()
+
+    @classmethod
+    async def find_all_services_by_service_line(cls, service_line: str):
+        async with async_session_maker() as session:
+            query = (
+                select(ServiceLines)
+                .options(selectinload(ServiceLines.services).load_only(Services.description))
+                .filter_by(name=service_line)
             )
             result = await session.execute(query)
             return result.scalar_one_or_none()

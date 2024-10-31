@@ -18,8 +18,8 @@ class DialogsDAO(BaseDAO):
             query = (
                 select(Dialogs)
                 .options(load_only(Dialogs.message, Dialogs.created_at))
-                .options(joinedload(Dialogs.sender))
-                .options(joinedload(Dialogs.recipient))
+                .options(joinedload(Dialogs.sender).load_only(Users.username, Users.fio))
+                .options(joinedload(Dialogs.recipient).load_only(Users.username, Users.fio))
                 .filter(
                     or_(
                         and_(
@@ -39,23 +39,9 @@ class DialogsDAO(BaseDAO):
     @classmethod
     async def send_message(cls, data: dict):
         async with async_session_maker() as session:
-            get_sender = (
-                select(Users)
-                .filter_by(id=data["sender_id"])
-            )
-            sender_orm = (await session.execute(get_sender)).scalar_one()
-
-            get_recipient = (
-                select(Users)
-                .filter_by(id=data["recipient_id"])
-            )
-            recipient_orm = (await session.execute(get_recipient)).scalar_one()
-
             new_dialog = Dialogs(
                 sender_id=data["sender_id"],
                 recipient_id=data["recipient_id"],
-                sender=sender_orm,
-                recipient=recipient_orm,
                 message=data["message"]
             )
             session.add(new_dialog)

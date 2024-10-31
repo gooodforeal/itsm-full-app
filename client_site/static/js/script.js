@@ -7,7 +7,7 @@ async function CreateFunction(event) {
     console.log(data);
 
     try {
-        const response = await fetch('/incidents/client/create', {
+        const response = await fetch('http://127.0.0.1:8000/incidents/client/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,7 +25,7 @@ async function CreateFunction(event) {
         alert('Успешно!')
 
     } catch (error) {
-
+        console.log(error);
         alert('Произошла ошибка при входе. Пожалуйста, попробуйте снова.');
     }
 }
