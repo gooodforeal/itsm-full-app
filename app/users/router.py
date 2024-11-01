@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 
 from app.users.auth import get_password_hash, authenticate_user, create_access_token
 from app.users.dao import UsersDAO
@@ -11,7 +11,7 @@ router = APIRouter(prefix='/auth', tags=['auth'])
 
 
 @router.post("/register/")
-async def register_user(user_data: Annotated[SUserRegister, Depends()]) -> dict:
+async def register_user(user_data: Annotated[SUserRegister, Body()]) -> dict:
     user = await UsersDAO.find_one_or_none(username=user_data.username)
     if user:
         return {"status": "error", "message": "User already exists!"}
@@ -22,7 +22,7 @@ async def register_user(user_data: Annotated[SUserRegister, Depends()]) -> dict:
 
 
 @router.post("/login/")
-async def auth_user(user_data: Annotated[SUserAuth, Depends()]):
+async def auth_user(user_data: Annotated[SUserAuth, Body()]):
     check = await authenticate_user(username=user_data.username, password=user_data.password)
     if check is None:
         return {"status": "error", "message": "Wrong username or password!"}
@@ -31,7 +31,7 @@ async def auth_user(user_data: Annotated[SUserAuth, Depends()]):
 
 
 @router.post("/is_admin/")
-async def is_admin(user: Annotated[SUserToken, Depends()]):
+async def is_admin(user: Annotated[SUserToken, Body()]):
     if await is_admin_user(user.token):
         return {
             "status": "ok",
@@ -47,7 +47,7 @@ async def is_admin(user: Annotated[SUserToken, Depends()]):
 
 
 @router.post("/is_tech/")
-async def is_tech(user: Annotated[SUserToken, Depends()]):
+async def is_tech(user: Annotated[SUserToken, Body()]):
     if await is_tech_user(user.token):
         return {
             "status": "ok",

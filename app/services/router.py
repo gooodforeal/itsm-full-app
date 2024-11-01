@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Body
 from typing import Annotated
 
 from app.services.dao import ServicesDAO, ServiceLinesDAO, ServiceTypesDAO
@@ -30,7 +30,7 @@ async def get_service(service_id: int):
 
 
 @router.post("/create")
-async def edit_service(service: Annotated[CreateServiceSchema, Depends()]):
+async def edit_service(service: Annotated[CreateServiceSchema, Body()]):
     service_type = await ServiceTypesDAO.find_one_or_none(name=service.service_type_name)
     service_line = await ServiceLinesDAO.find_one_or_none(name=service.service_line_name)
 
@@ -48,7 +48,7 @@ async def edit_service(service: Annotated[CreateServiceSchema, Depends()]):
 
 
 @router.post("/delete/")
-async def delete_service_by_id(service: Annotated[DeleteServiceSchema, Depends()]):
+async def delete_service_by_id(service: Annotated[DeleteServiceSchema, Body()]):
     await get_current_user(service.token)
     check = await ServicesDAO.delete(id=service.service_id)
     if check:
@@ -66,7 +66,7 @@ async def delete_service_by_id(service: Annotated[DeleteServiceSchema, Depends()
 
 
 @router.post("/edit")
-async def edit_service(service: Annotated[EditServiceSchema, Depends()]):
+async def edit_service(service: Annotated[EditServiceSchema, Body()]):
     await get_current_user(service.token)
     edited_service = await ServicesDAO.edit_service(
         service_id=service.service_id,
