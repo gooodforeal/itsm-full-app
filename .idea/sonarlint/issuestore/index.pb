@@ -136,3 +136,7 @@ w
 G.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302,e\d\ed67eb178d523a4b3f117dcbe0eda5196367ceec
 Å
 Q.idea/sonarlint/securityhotspotstore/8/c/8c418c4a53a1da9f5c14f3faddf629ef73c08874,a\3\a3ff460ab09f6b8054d811144060a005375bceb9
+A
+app/exceptions.py,a\a\aa21a0b0c87769481dce2214981b6f99e44d7277
+6
+tst.py,5\3\539f0cdd034cafa7d6223cde55f99e2616bf5dae
