@@ -1,3 +1,4 @@
 .env
 .ideae
 venv
+.mypy_cache

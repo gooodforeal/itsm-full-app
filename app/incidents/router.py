@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from typing import Annotated
 
 from app.incidents.dao import IncidentsDAO, StatusesDAO
 from app.services.dao import ServiceLinesDAO
@@ -30,7 +32,7 @@ async def get_all_incidents():
 
 
 @router.post("/all")
-async def get_all_incidents(user: GetAllIncidentsSchema):
+async def get_all_incidents(user: Annotated[GetAllIncidentsSchema, Depends()]):
     current_user = await get_current_user(user.token)
     user_id = current_user.id
     incidents = await IncidentsDAO.find_all_joined_by_user_id(user_id=user_id)
@@ -42,7 +44,7 @@ async def get_all_incidents(user: GetAllIncidentsSchema):
 
 
 @router.post("/create")
-async def create_incident(incident: CreateIncidentSchema):
+async def create_incident(incident: Annotated[CreateIncidentSchema, Depends()]):
     current_user = await get_current_user(incident.token)
     service_line = await ServiceLinesDAO.find_one_or_none(name=incident.service_line_name.value)
     incident_dict = incident.dict()
@@ -57,7 +59,7 @@ async def create_incident(incident: CreateIncidentSchema):
 
 
 @router.post("/client/create")
-async def create_client_incident(incident: CreateIncidentClientSchema):
+async def create_client_incident(incident: Annotated[CreateIncidentClientSchema, Depends()]):
     service_line = await ServiceLinesDAO.find_one_or_none(name=incident.service_line_name.value)
     incident_dict = incident.dict()
     incident_dict["service_line_id"] = service_line.id
@@ -70,7 +72,7 @@ async def create_client_incident(incident: CreateIncidentClientSchema):
 
 
 @router.post("/edit")
-async def edit_incident(incident: EditIncidentSchema):
+async def edit_incident(incident: Annotated[EditIncidentSchema, Depends()]):
     current_user = await get_current_user(incident.token)
     current_user_id = current_user.id
     if await is_admin_user(incident.token):
@@ -93,7 +95,7 @@ async def edit_incident(incident: EditIncidentSchema):
 
 
 @router.post("/admin/all")
-async def get_all_incidents(user: GetAllIncidentsAdminSchema):
+async def get_all_incidents(user: Annotated[GetAllIncidentsAdminSchema, Depends()]):
     if (await is_admin_user(user.token)) or await is_tech_user(user.token):
         incidents = await IncidentsDAO.find_all_joined()
         return {

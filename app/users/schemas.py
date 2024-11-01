@@ -13,4 +13,4 @@ class SUserAuth(BaseModel):
 
 
 class SUserToken(BaseModel):
-    token: str
+    token: str = Field(..., description="JWT token")

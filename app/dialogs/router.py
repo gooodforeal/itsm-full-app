@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from typing import Annotated
 
 from app.dialogs.schemas import GetDialogSchema, SendDialogSchema
 from app.users.dependencies import get_current_user
@@ -10,7 +12,7 @@ router = APIRouter(prefix='/dialogs', tags=['dialogs'])
 
 
 @router.post("/dialog")
-async def get_dialog(dialog: GetDialogSchema):
+async def get_dialog(dialog: Annotated[GetDialogSchema, Depends()]):
     sender_user = await get_current_user(dialog.sender_token)
     recipient = await UsersDAO.find_one_or_none(username=dialog.recipient_username)
 
@@ -35,7 +37,7 @@ async def get_dialog(dialog: GetDialogSchema):
 
 
 @router.post("/send_message")
-async def get_dialog(dialog: SendDialogSchema):
+async def get_dialog(dialog: Annotated[SendDialogSchema, Depends()]):
     sender_user = await get_current_user(dialog.sender_token)
     recipient = await UsersDAO.find_one_or_none(username=dialog.recipient_username)
 
